@@ -1,1 +1,179 @@
 # English-paragraph-
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On the Beach</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #071a35, #087eaa, #42c6c9);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: white;
+}
+
+.container {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  background: rgba(5, 20, 45, 0.88);
+  padding: 28px 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #bcefff;
+  margin-bottom: 25px;
+}
+
+.names {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+button {
+  padding: 15px;
+  border: 1px solid #55d8e8;
+  border-radius: 12px;
+  background: #103b5d;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover, button.active {
+  background: #36c9c9;
+  color: #071a35;
+  transform: translateY(-2px);
+}
+
+.result {
+  display: none;
+  text-align: left;
+  margin-top: 24px;
+  padding: 20px;
+  background: #f5fcff;
+  color: #12304b;
+  border-radius: 16px;
+  animation: appear 0.3s ease;
+}
+
+.result h2 {
+  text-align: center;
+  color: #087eaa;
+  margin-top: 0;
+}
+
+.result p {
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.count {
+  text-align: center;
+  font-size: 13px;
+  color: #52758b;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>🏖️ On the Beach</h1>
+  <p class="subtitle">Choose your name to see your paragraph!</p>
+
+  <div class="names">
+    <button onclick="showParagraph('Adam', this)">Adam</button>
+    <button onclick="showParagraph('Yassin', this)">Yassin</button>
+    <button onclick="showParagraph('Mudather', this)">Mudather</button>
+    <button onclick="showParagraph('Hamza', this)">Hamza</button>
+  </div>
+
+  <div class="result" id="result">
+    <h2 id="person"></h2>
+    <p id="paragraph"></p>
+    <div class="count" id="count"></div>
+  </div>
+</div>
+
+<script>
+const paragraphs = {
+  Adam: [
+    "The beach is a beautiful place to visit.",
+    "The weather is sunny and warm.",
+    "The sea water is blue and clear."
+  ],
+
+  Yassin: [
+    "Many people go to the beach in summer.",
+    "Children enjoy playing with the sand.",
+    "Some people swim in the sea."
+  ],
+
+  Mudather: [
+    "Others build sandcastles and collect seashells.",
+    "I like watching the waves.",
+    "I also enjoy playing with my friends."
+  ],
+
+  Hamza: [
+    "We eat delicious food together.",
+    "We take beautiful photos near the sea.",
+    "I love the beach because it makes me happy."
+  ]
+};
+
+function showParagraph(name, button) {
+  document.getElementById("person").textContent =
+    name + "'s Paragraph";
+
+  document.getElementById("paragraph").textContent =
+    paragraphs[name].join(" ");
+
+  document.getElementById("count").textContent =
+    "3 sentences";
+
+  document.getElementById("result").style.display = "block";
+
+  document.querySelectorAll(".names button").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+}
+</script>
+</body>
+</html>
