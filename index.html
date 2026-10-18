@@ -1,179 +1,262 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>On the Beach</title>
+<title>English Paragraph Beach</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  color:#073b59;
+  background:#9deaff;
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #071a35, #087eaa, #42c6c9);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  color: white;
+header{
+  text-align:center;padding:25px 12px;
+  background:linear-gradient(#4acfff,#d9faff);
 }
-
-.container {
-  width: 100%;
-  max-width: 520px;
-  text-align: center;
-  background: rgba(5, 20, 45, 0.88);
-  padding: 28px 22px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+header h1{font-size:32px;margin:8px}
+.score{
+  background:white;display:inline-block;
+  padding:12px 20px;border-radius:25px;
+  font-weight:bold;margin-top:8px
 }
-
-h1 {
-  font-size: 32px;
-  margin-bottom: 8px;
+.beach{
+  min-height:75vh;padding:25px 14px 45px;
+  background:
+  radial-gradient(circle at 88% 9%,#fff6a8 0 34px,#ffbd37 35px 42px,transparent 43px),
+  linear-gradient(to bottom,#a9eeff 0%,#bcefff 17%,#28c5ed 18%,#087cb5 65%,#ffe7a6 66%,#f7d28c 100%);
 }
-
-.subtitle {
-  color: #bcefff;
-  margin-bottom: 25px;
+.intro{
+  max-width:700px;margin:0 auto 24px;
+  padding:18px;text-align:center;
+  background:#ffffffed;border-radius:20px
 }
-
-.names {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:13px;max-width:1100px;margin:auto
 }
-
-button {
-  padding: 15px;
-  border: 1px solid #55d8e8;
-  border-radius: 12px;
-  background: #103b5d;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
+.topic{
+  border:2px solid white;background:#ffffffed;
+  color:#075477;border-radius:18px;padding:15px 8px;
+  min-height:125px;cursor:pointer;
+  box-shadow:0 5px 12px #003e5520;
+  transition:.2s
 }
-
-button:hover, button.active {
-  background: #36c9c9;
-  color: #071a35;
-  transform: translateY(-2px);
+.topic:hover{transform:translateY(-5px);background:#fff9d9}
+.emoji{display:block;font-size:37px;margin-bottom:8px}
+.topic small{display:block;margin-top:7px}
+.topic.done{background:#d5ffe4;border-color:#12a65c}
+.modal{
+  display:none;position:fixed;inset:0;
+  background:#00283dbd;z-index:5;
+  padding:14px;overflow:auto
 }
-
-.result {
-  display: none;
-  text-align: left;
-  margin-top: 24px;
-  padding: 20px;
-  background: #f5fcff;
-  color: #12304b;
-  border-radius: 16px;
-  animation: appear 0.3s ease;
+.modal-box{
+  background:white;max-width:750px;
+  margin:20px auto;padding:24px;border-radius:22px
 }
-
-.result h2 {
-  text-align: center;
-  color: #087eaa;
-  margin-top: 0;
+.modal-box h2{color:#008bb9}
+#paragraph{font-size:17px;line-height:1.9;color:#24485b}
+button{
+  border:0;border-radius:12px;padding:12px 17px;
+  font-size:15px;font-weight:bold;cursor:pointer;margin:5px
 }
-
-.result p {
-  font-size: 17px;
-  line-height: 1.8;
-}
-
-.count {
-  text-align: center;
-  font-size: 13px;
-  color: #52758b;
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+.finish{background:#13a765;color:white}
+.close{background:#e8f5fa;color:#075477}
+footer{text-align:center;padding:20px;background:#fff1c9}
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h1>🏖️ On the Beach</h1>
-  <p class="subtitle">Choose your name to see your paragraph!</p>
 
-  <div class="names">
-    <button onclick="showParagraph('Adam', this)">Adam</button>
-    <button onclick="showParagraph('Yassin', this)">Yassin</button>
-    <button onclick="showParagraph('Mudather', this)">Mudather</button>
-    <button onclick="showParagraph('Hamza', this)">Hamza</button>
+<header>
+  <div style="font-size:43px">☀️ 🏖️ 🌴</div>
+  <h1>English Paragraph Beach</h1>
+  <p>Choose a beach object and discover a paragraph!</p>
+  <div class="score">
+    ⭐ Score: <span id="score">0</span> / 400
+    &nbsp; | &nbsp; Completed: <span id="count">0</span> / 40
   </div>
+</header>
 
-  <div class="result" id="result">
-    <h2 id="person"></h2>
+<main class="beach">
+  <div class="intro">
+    <h2>🌊 Welcome to the Beach!</h2>
+    <p>Click an object to read its English paragraph.
+    Every paragraph has 40 sentences and is worth 10 points.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>🐚 Learn English • Read • Explore • Have Fun 🐠</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h2 id="title"></h2>
     <p id="paragraph"></p>
-    <div class="count" id="count"></div>
+    <p><b>⭐ This paragraph is worth 10 points.</b></p>
+    <button class="finish" id="finish" onclick="complete()">Complete (+10 points)</button>
+    <button class="close" onclick="closeModal()">Close</button>
   </div>
 </div>
 
 <script>
-const paragraphs = {
-  Adam: [
-    "The beach is a beautiful place to visit.",
-    "The weather is sunny and warm.",
-    "The sea water is blue and clear."
-  ],
+const topics=[
+["☀️","The Sun"],["🌊","The Sea"],["🏖️","The Beach"],
+["🐚","Seashells"],["🐠","Colorful Fish"],["🐬","Dolphins"],
+["🐢","Sea Turtles"],["🦀","Crabs"],["🐙","Octopuses"],
+["🪼","Jellyfish"],["⛵","Sailing"],["🚤","Boats"],
+["🏝️","A Small Island"],["🌴","Palm Trees"],["🏄","Surfing"],
+["🏊","Swimming"],["🎒","A Summer Holiday"],["🧴","Sun Protection"],
+["🏰","A Sandcastle"],["🪁","Flying a Kite"],["🧺","A Beach Picnic"],
+["🌅","Sunrise"],["🌇","Sunset"],["🌈","A Rainbow"],
+["🌧️","Rainy Weather"],["🌬️","The Sea Breeze"],["🐦","Seagulls"],
+["🐳","Whales"],["🪸","Coral Reefs"],["🌿","Sea Plants"],
+["♻️","Clean Beaches"],["🌍","Protecting the Ocean"],["🛟","Beach Safety"],
+["🧑‍🤝‍🧑","A Day with Friends"],["👨‍👩‍👧‍👦","A Family Trip"],
+["📸","Beach Photography"],["🏐","Beach Games"],["🍉","Summer Food"],
+["🧳","My Dream Holiday"],["💙","Why I Love the Sea"]
+];
 
-  Yassin: [
-    "Many people go to the beach in summer.",
-    "Children enjoy playing with the sand.",
-    "Some people swim in the sea."
-  ],
+// Every paragraph contains exactly 40 sentences.
+const beachParagraph=[
+"The beach is a beautiful place.",
+"I love going to the beach.",
+"The sea is blue and clear.",
+"The sun shines brightly in the sky.",
+"The sand is soft and warm.",
+"I like walking on the sand.",
+"My family comes to the beach with me.",
+"We enjoy spending time together.",
+"I can hear the sound of the waves.",
+"The waves move gently towards the shore.",
+"I like swimming in the sea.",
+"I always follow the safety rules.",
+"My brother enjoys playing with a ball.",
+"My sister likes collecting seashells.",
+"We build a big sandcastle.",
+"The sandcastle looks beautiful.",
+"Some children are flying kites.",
+"The kites move in the wind.",
+"I can see boats on the water.",
+"Seagulls fly above the sea.",
+"Some people are sitting under umbrellas.",
+"They want to stay in the shade.",
+"My mother prepares delicious sandwiches.",
+"We eat our lunch together.",
+"We drink cold water on hot days.",
+"I wear a hat to protect myself from the sun.",
+"I use sunscreen to protect my skin.",
+"The sea breeze feels cool and fresh.",
+"I see colorful fish in the water.",
+"The beach is full of happy people.",
+"I take beautiful pictures with my family.",
+"We laugh and play together.",
+"I never leave rubbish on the sand.",
+"I always put my rubbish in a bin.",
+"Keeping the beach clean is very important.",
+"The sky becomes orange at sunset.",
+"The sunset looks wonderful over the sea.",
+"We collect our things before leaving.",
+"I feel happy after a day at the beach.",
+"I hope to visit the beach again soon."
+];
 
-  Mudather: [
-    "Others build sandcastles and collect seashells.",
-    "I like watching the waves.",
-    "I also enjoy playing with my friends."
-  ],
+const paragraphs = topics.map((topic,i)=>{
+  if(i===2) return beachParagraph.join(" ");
+  const subject=topic[1];
+  const sentences=[
+    subject+" is an interesting topic.",
+    "I enjoy learning about "+subject.toLowerCase()+".",
+    "It is connected to the beautiful beach.",
+    "The sea is an important part of nature.",
+    "Many people enjoy spending time outdoors.",
+    "The weather can change during the day.",
+    "The sky often looks beautiful in the morning.",
+    "We can learn many new things outside.",
+    "Nature gives us wonderful things to discover.",
+    "The beach is a special place for families.",
+    "Children enjoy exploring their surroundings.",
+    "Adults also enjoy relaxing near the water.",
+    "Some people like taking pictures of nature.",
+    "Others enjoy walking along the shore.",
+    "The sound of the waves is relaxing.",
+    "The fresh air feels wonderful.",
+    "We should always follow safety rules.",
+    "Clean water is important for living things.",
+    "Sea animals need a safe home.",
+    "We must never throw rubbish into the water.",
+    "We should put waste in the correct bin.",
+    "Keeping nature clean helps everyone.",
+    "The beach can be busy during holidays.",
+    "Families often bring food and drinks.",
+    "Friends can enjoy many activities together.",
+    "It is important to respect other visitors.",
+    "We should take care of the environment.",
+    "The sun makes the day bright.",
+    "Clouds sometimes appear in the sky.",
+    "A gentle breeze can make us feel cool.",
+    "The water can look different in the sunlight.",
+    "Every visit can teach us something new.",
+    "Nature is full of amazing sights.",
+    "We can share happy moments with others.",
+    "It is good to spend time outside.",
+    "The beach gives us beautiful memories.",
+    "We should protect the places we love.",
+    "Small actions can help keep beaches clean.",
+    "I feel happy when I explore nature.",
+    "I hope to enjoy the beach again soon."
+  ];
+  return sentences.join(" ");
+});
 
-  Hamza: [
-    "We eat delicious food together.",
-    "We take beautiful photos near the sea.",
-    "I love the beach because it makes me happy."
-  ]
-};
+let completed=new Set();
+let current=-1;
 
-function showParagraph(name, button) {
-  document.getElementById("person").textContent =
-    name + "'s Paragraph";
+const grid=document.getElementById("grid");
 
-  document.getElementById("paragraph").textContent =
-    paragraphs[name].join(" ");
+topics.forEach((topic,i)=>{
+  const button=document.createElement("button");
+  button.className="topic";
+  button.innerHTML=`<span class="emoji">${topic[0]}</span>
+  <strong>${topic[1]}</strong><small>⭐ 10 points</small>`;
+  button.onclick=()=>openTopic(i);
+  button.id="topic"+i;
+  grid.appendChild(button);
+});
 
-  document.getElementById("count").textContent =
-    "3 sentences";
-
-  document.getElementById("result").style.display = "block";
-
-  document.querySelectorAll(".names button").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
-  button.classList.add("active");
+function openTopic(i){
+  current=i;
+  document.getElementById("title").textContent=
+    topics[i][0]+" "+topics[i][1];
+  document.getElementById("paragraph").textContent=paragraphs[i];
+  document.getElementById("modal").style.display="block";
+  document.getElementById("finish").disabled=completed.has(i);
+  document.getElementById("finish").textContent=
+    completed.has(i)?"Completed ✓":"Complete (+10 points)";
 }
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+function complete(){
+  if(current<0 || completed.has(current)) return;
+  completed.add(current);
+  document.getElementById("topic"+current).classList.add("done");
+  document.getElementById("score").textContent=completed.size*10;
+  document.getElementById("count").textContent=completed.size;
+  document.getElementById("finish").disabled=true;
+  document.getElementById("finish").textContent="Completed ✓";
+}
+
+document.getElementById("modal").addEventListener("click",e=>{
+  if(e.target.id==="modal") closeModal();
+});
 </script>
 </body>
 </html>
